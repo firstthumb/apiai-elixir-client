@@ -6,7 +6,7 @@ It is an Elixir client library for the Api.ai API.
 
 Apiai Elixir client currently supports:
 
-  1. Do query `ApiAi.query/1`
+  1. Do query `ApiAi.query/6`
 
 Adding endpoints should be relatively simple, and I'm open to pull requests.
 
@@ -34,16 +34,20 @@ The package can be installed as:
 
 ## Usage
 
-```elixir
-client = %ApiAi.Client{
-  client_access_token: "CLIENT_ACCESS_TOKEN_HERE",
-  developer_access_token: "CLIENT_SECRET_HERE"
-}
+Write your Api.ai credentials to config file
 
-case ApiAi.query(client, "Hi", [{weather: 4}], "session_id") do
+```elixir
+config :apiai,
+    client_access_token: "CLIENT_ACCESS_TOKEN_HERE",
+    developer_access_token: "DEVELOPER_ACCESS_TOKEN_HERE"
+```
+
+
+```elixir
+case ApiAi.query "Hi", "session_id" do
   {:ok, response} ->
     IO.inspect response
-  {:error, error} ->
+  {:error, error}
     IO.inspect error
 end
 ```
