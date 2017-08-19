@@ -35,13 +35,13 @@ defmodule ApiAi.Client do
   # Helpers
 
   defp add_default_headers(client, headers, _authenticated) do
-    headers = [user_agent_header(), auth_token_header(client), content_type_json()] ++ headers
+    [user_agent_header(), auth_token_header(client), content_type_json()] ++ headers
   end
 
-  defp add_default_parameters(client, :empty, _authenticated) do
+  defp add_default_parameters(_client, :empty, _authenticated) do
     [ v: @api_version]
   end
-  defp add_default_parameters(client, params, _authenticated) do
+  defp add_default_parameters(_client, params, _authenticated) do
     [ v: @api_version] ++ params
   end
 
