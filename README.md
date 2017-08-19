@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/firstthumb/apiai-elixir-client.svg?branch=master)](https://travis-ci.org/firstthumb/apiai-elixir-client)
+
 # Apiai
 
 It is an Elixir client library for the Api.ai API.
