@@ -1,3 +1,4 @@
+[![Hex pm](http://img.shields.io/hexpm/v/apiai.svg?style=flat)](https://hex.pm/packages/apiai)
 [![Build Status](https://travis-ci.org/firstthumb/apiai-elixir-client.svg?branch=master)](https://travis-ci.org/firstthumb/apiai-elixir-client)
 
 # Apiai
@@ -9,6 +10,7 @@ It is an Elixir client library for the Api.ai API.
 Apiai Elixir client currently supports:
 
   1. Do query `ApiAi.query/6`
+  2. Crud operation on intents `ApiAi.get_intent/1`, `ApiAi.delete_intent/1`, `ApiAi.add_intent/5` and `ApiAi.save_intent/6` 
 
 Adding endpoints should be relatively simple, and I'm open to pull requests.
 
@@ -21,7 +23,7 @@ The package can be installed as:
   ```elixir
   def deps do
     [
-      {:apiai, "~> 0.1.0"}
+      {:apiai, "~> 0.1.2"}
     ]
   end
   ```
