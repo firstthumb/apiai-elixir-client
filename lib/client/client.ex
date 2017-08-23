@@ -13,10 +13,18 @@ defmodule ApiAi.Client do
 
   def request(client, method, path, params, body, headers, authenticated) do
     params = add_default_parameters(client, params, authenticated)
-    headers = add_default_headers(client, headers, authenticated)
+    headers = add_default_headers(client, headers, authenticated, !String.starts_with?(path, "query"))
 
     url = url(path, params)
     request(method, url, body, headers, [])
+  end
+
+  def put(client, path, body, params \\ :empty, authenticated \\ false) do
+    request(client, :put, path, params, body, [], authenticated)
+  end
+
+  def delete(client, path, params \\ :empty, authenticated \\ false) do
+    request(client, :delete, path, params, "", [], authenticated)
   end
 
   def get(client, path, params \\ :empty, authenticated \\ false) do
@@ -34,8 +42,9 @@ defmodule ApiAi.Client do
 
   # Helpers
 
-  defp add_default_headers(client, headers, _authenticated) do
-    [user_agent_header(), auth_token_header(client), content_type_json()] ++ headers
+  defp add_default_headers(client, headers, _authenticated, is_developer \\ false) do
+    auth_token_header = if is_developer, do: auth_developer_token_header(client), else: auth_client_token_header(client)
+    [user_agent_header(), auth_token_header, content_type_json()] ++ headers
   end
 
   defp add_default_parameters(_client, :empty, _authenticated) do
@@ -49,8 +58,12 @@ defmodule ApiAi.Client do
     {"User-Agent", "#{@user_agent}/#{ApiAi.version}"}
   end
 
-  defp auth_token_header(client) do
+  defp auth_client_token_header(client) do
     {"Authorization", "Bearer #{client.client_access_token}"}
+  end
+
+  defp auth_developer_token_header(client) do
+    {"Authorization", "Bearer #{client.developer_access_token}"}
   end
 
   defp content_type_json() do
