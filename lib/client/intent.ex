@@ -3,6 +3,15 @@ defmodule ApiAi.Intent do
 
   defstruct [:name, :auto, :contexts, :templates, :userSays, :responses, :priority]
 
+  def get_all_intents(client) do
+    case ApiAi.Client.get(client, "intents") do
+      {:ok, %HTTPoison.Response{body: body}} ->
+        {:ok, body}
+      {:error, error} ->
+        {:error, error}
+    end
+  end
+
   def get_intent(client, intent_id) do
     case ApiAi.Client.get(client, "intents/#{intent_id}") do
       {:ok, %HTTPoison.Response{body: body}} ->
@@ -15,7 +24,11 @@ defmodule ApiAi.Intent do
   def delete_intent(client, intent_id) do
     case ApiAi.Client.delete(client, "intents/#{intent_id}") do
       {:ok, %HTTPoison.Response{body: body}} ->
-        {:ok, body}
+        if body["status"]["code"] == 200 do
+          {:ok, body}
+        else
+          {:error, body}
+        end
       {:error, error} ->
         {:error, error}
     end
@@ -26,7 +39,11 @@ defmodule ApiAi.Intent do
 
     case ApiAi.Client.post(client, "intents", Poison.encode!(payload), :empty, false) do
       {:ok, %HTTPoison.Response{body: body}} ->
-        {:ok, body}
+        if body["status"]["code"] == 200 do
+          {:ok, body}
+        else
+          {:error, body}
+        end
       {:error, error} ->
         {:error, error}
     end
@@ -37,7 +54,11 @@ defmodule ApiAi.Intent do
 
     case ApiAi.Client.put(client, "intents/#{intent_id}", Poison.encode!(payload), :empty, false) do
       {:ok, %HTTPoison.Response{body: body}} ->
-        {:ok, body}
+        if body["status"]["code"] == 200 do
+          {:ok, body}
+        else
+          {:error, body}
+        end
       {:error, error} ->
         {:error, error}
     end

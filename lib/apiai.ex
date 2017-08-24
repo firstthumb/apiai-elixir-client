@@ -13,6 +13,10 @@ defmodule ApiAi do
     client() |> ApiAi.Query.query(query_text, session_id, contexts, location, lang, timezone)
   end
 
+  def get_all_intents() do
+    client() |> ApiAi.Intent.get_all_intents()
+  end
+
   def get_intent(intent_id) do
     client() |> ApiAi.Intent.get_intent(intent_id)
   end
