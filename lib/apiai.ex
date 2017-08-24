@@ -9,6 +9,10 @@ defmodule ApiAi do
     }
   end
 
+  def event(event_name, event_data \\ %{}, session_id, contexts \\ [], location \\ nil, lang \\ "en", timezone \\ "America/New_York") do
+    client() |> ApiAi.Query.event(event_name, event_data, session_id, contexts, location, lang, timezone)
+  end
+
   def query(query_text, session_id, contexts \\ [], location \\ nil, lang \\ "en", timezone \\ "America/New_York") do
     client() |> ApiAi.Query.query(query_text, session_id, contexts, location, lang, timezone)
   end
